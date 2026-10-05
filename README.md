@@ -8,7 +8,8 @@ layer; later platforms follow the same shape.
 
 **Status (2026-10-03): starter skeleton.** The system layer, source reviews and plays
 library are drafted. No skill is built yet. [BUILD-PLAN.md](BUILD-PLAN.md) is the build
-queue; [AGENTS.md](AGENTS.md) is the handoff for the agent doing the build.
+queue; [AGENTS.md](AGENTS.md) holds the working rules and the build decisions;
+[HANDOFF.md](HANDOFF.md) holds the current state and the last session.
 
 For agents maintaining or using this repository, this page is the authority map. Read the
 [conventions](core/_system/CONVENTIONS.md) before writing a skill, the
@@ -21,9 +22,12 @@ ad account.
 ```
 Ad-Hub/
 ├── README.md            authority map (this page)
-├── AGENTS.md            handoff: decisions made, how to build, open questions
+├── AGENTS.md            working rules for every agent, build decisions, owner answers
+├── CLAUDE.md            points Claude Code at AGENTS.md
+├── HANDOFF.md           current state and the last session; read it first
 ├── BUILD-PLAN.md        build queue with a brief per skill
 ├── PROVENANCE.md        where outside material came from
+├── people/              operator profile
 ├── install/             plug-in mechanism for business repos (to build)
 ├── source-notes/        written reviews of outside sources, in our own words
 ├── core/                the chassis, platform-neutral
