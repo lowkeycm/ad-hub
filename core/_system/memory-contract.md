@@ -1,9 +1,10 @@
 # Memory contract (draft)
 
 How Ad-Hub remembers. The hub holds no business facts. Everything about a business,
-its offers, its accounts and its results lives in that business's own repo. The folder
-layout and the ad ID format below are proposals for the owner to confirm before the
-first skill writes into a business repo.
+its offers, its accounts and its results lives in that business's own repo. The owner
+approved the folder layout and the ad ID format below on 2026-10-05. The fill-in
+templates for the files other skills depend on are in [schemas/](schemas/): offer file,
+authority file, ledger row and change-log entry.
 
 ## Two kinds of context
 
@@ -50,7 +51,7 @@ ads/
 | `strategy/*`, ledger IDs and tags | `ad-strategy` |
 | `creative/<batch>/` | `ad-creative` |
 | `platform/<platform>.md` | `ad-setup` |
-| ledger status, `changes/` | `ad-launch`, `ad-manage` |
+| ledger status, `changes/` | `ad-launch`, `ad-manage` (earlier ledger statuses: see [schemas/ledger-row.md](schemas/ledger-row.md), pending owner confirmation) |
 | `results/`, `learnings.md` | `ad-review` only |
 | `ads.yaml` | whichever skill last wrote a file updates that file's entry |
 
@@ -95,7 +96,7 @@ platform to learn from. Platform-specific requirements live in the platform laye
 
 One ID follows an ad from idea to result. `ad-strategy` creates it; nobody renames it.
 
-Proposed format: `<offer>-<yymm>-<nnn>`, with `-v2`, `-v3` for revisions.
+Format (approved 2026-10-05): `<offer>-<yymm>-<nnn>`, with `-v2`, `-v3` for revisions.
 Example: `song-2610-007`.
 
 The same ID is the brief name, the asset file name, the ad's name on the platform, the
