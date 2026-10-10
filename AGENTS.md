@@ -224,7 +224,7 @@ ad-hub/
 ├── people/clay.md       operator profile
 ├── .claude/             Claude Code settings and the session-start hook
 ├── core/
-│   ├── _system/         CONVENTIONS.md, memory-contract.md, spend-authority.md (drafts)
+│   ├── _system/         CONVENTIONS.md, memory-contract.md, spend-authority.md (drafts), schemas/
 │   ├── skills/          one folder per skill; only ad-strategy/references/plays.md exists
 │   └── automations/     README.md only; routines not built
 ├── meta-system/         Meta layer: README.md plus dated references/ (platform-tools, result-signals)
@@ -246,7 +246,7 @@ Kept, and adapted to an owner decision. Ad-Hub is itself a capability hub for on
 - **Owner decision** (starter decision 1, restated by Clay on 2026-10-05): Ad-Hub is self-contained. Marketing-Hub (`github.com/lowkeycm/Marketing-Hub`) is its structural model only: authority map, shared system layer, one skill pattern, dated facts, source reviews, provenance, regression cases, and the `install/` pointer generator. Do not copy Marketing-Hub content into this repo, and do not make any Ad-Hub skill read, call or require Marketing-Hub.
 - **So no `hub-` pointers are installed in this repo**, and its session hook does not generate them. That is deliberate, not a missed setup step. The usual rule, Marketing-Hub as the canonical marketing method, governs business repos, not this hub's own skills.
 - **In a business repo**, ad work goes through Ad-Hub's own pointers, prefixed `adhub-` (Clay, 2026-10-05), so they never collide with Marketing-Hub's `hub-` pointers. Non-ad marketing work (website, SEO, email, social, brand) stays with Marketing-Hub in that business repo.
-- **Open, decide before the first business install:** Marketing-Hub also has `paid-ads`, `start-here`, `audience-research`, `competitive-intel` and `performance-review` skills. A business repo with both hubs will list both sets. Clay decides which one owns ad work there. Until then, say which one you used and why.
+- **Who owns ad work in a business repo with both hubs** (Clay, 2026-10-06): ultimately Marketing-Hub. Marketing-Hub also has `paid-ads`, `start-here`, `audience-research`, `competitive-intel` and `performance-review` skills. Reconcile the two once Ad-Hub works on its own; until then build Ad-Hub independently and do not design around the merge. In a business repo that has both before then, say which one you used and why.
 - **Access on 2026-10-05:** reachable from Claude Code (remote), checked out beside this repo at `../marketing-hub` (lower case), revision `911e979` (2026-10-03). `PROVENANCE.md` records the starter as modelled on revision `05fe2d34` (2026-10-01).
 - Marketing-Hub is reference material. Do not modify it from an Ad-Hub session unless Clay explicitly asks.
 
