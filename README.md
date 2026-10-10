@@ -31,7 +31,7 @@ Ad-Hub/
 ├── install/             plug-in mechanism for business repos (to build)
 ├── source-notes/        written reviews of outside sources, in our own words
 ├── core/                the chassis, platform-neutral
-│   ├── _system/         conventions, memory contract, spend authority, schemas
+│   ├── _system/         conventions, memory contract, spend authority, schemas, scripts
 │   ├── skills/          one folder per skill (to build)
 │   └── automations/     scheduled routines (to build)
 └── meta-system/         thin Meta layer: dated platform facts and tool how-to

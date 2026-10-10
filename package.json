@@ -1,0 +1,9 @@
+{
+  "name": "ad-hub",
+  "private": true,
+  "description": "Ad-Hub helper scripts. Node standard library only; no dependencies.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test core/_system/scripts/test/scripts.test.mjs"
+  }
+}

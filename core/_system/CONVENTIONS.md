@@ -60,7 +60,8 @@ metadata:
 ```
 
 `reads` and `writes` are the contract. A skill writes only what it owns. `live: act` is
-allowed for `ad-launch` and `ad-manage` only.
+allowed for `ad-launch` and `ad-manage` only. `node core/_system/scripts/route.mjs --check`
+enforces these rules and is part of the build gate.
 
 ## 4. Skeleton of a SKILL.md
 
@@ -89,7 +90,7 @@ Dated facts live in reference files with this header in the first lines:
 `last-verified: YYYY-MM-DD · ttl-days: N · refresh: <exact instruction>`
 
 At use time, if today is past last-verified plus ttl, refresh first and say so in one
-line. Platform facts are verified against the platform's own documentation or tools,
+line. `node core/_system/scripts/freshness.mjs` reports every dated file's state. Platform facts are verified against the platform's own documentation or tools,
 not against a creator's video.
 
 ## 7. Plays

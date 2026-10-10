@@ -96,11 +96,12 @@ Record the operator in the Last Session block of `HANDOFF.md`.
 
 ### 2.4 Stack
 
-Checked against the repository on 2026-10-05.
+Checked against the repository on 2026-10-10.
 
 - **Content:** Markdown only. Rules, references, source reviews and the plays library are `.md` files. No skill (`SKILL.md`) exists yet.
-- **Code:** none. There is no `package.json`, `requirements.txt`, lockfile, script or CI workflow anywhere in the repo.
-- **Planned:** Stage 1 of `BUILD-PLAN.md` adds helper scripts (context loader, freshness checker, router) and a pointer generator. Their language is not chosen yet: UNVERIFIED. `.gitignore` allows for both Node (`node_modules/`) and Python (`__pycache__/`, `.venv/`). The Marketing-Hub generator used as the structural model is a dependency-free Node script. Record the choice here when the first script lands.
+- **Code:** Node, standard library only, no packages (Clay, 2026-10-10). Helper scripts in `core/_system/scripts/` (context loader, freshness checker, router and skill check), tested with Node's built-in test runner. `package.json` exists only to name the test command; there is no lockfile and nothing to install. Node 20 or later. Keep new scripts dependency-free unless Clay approves a package.
+- **CI:** none. No `.github/workflows/` yet.
+- **Planned:** the pointer generator for business repos (Stage 1), in the same style.
 - **Seen on Claude Code (remote), 2026-10-05:** Node 22.22.0 and Python 3.11.15 installed. That describes the platform, not a project requirement.
 
 ### 2.5 Secrets map
@@ -130,9 +131,10 @@ Run everything from the repo root.
 
 | Command | What it does | Verified |
 | --- | --- | --- |
-| none | There is no install step, build, test suite or CI yet. | 2026-10-05, confirmed there is nothing to run |
+| none | No install step: the scripts use only Node's standard library. | 2026-10-10 |
+| `npm test` | Runs the helper-script tests against synthetic fixtures, then checks the real hub: every freshness header valid, every built skill passes `route.mjs --check`. | 2026-10-10, 15 of 15 passing on Node 22.22.0 |
 
-**Build gate: none exists yet, and there is no test suite.** Until Stage 1 lands its scripts, the safety net for every change is: re-read the diff, confirm every relative link you added points at a real file, confirm no template placeholder is left in `AGENTS.md` or `HANDOFF.md` (the check in clay-config `NEW-PROJECT.md`), and keep the README layout and task table matching what actually exists. Whoever adds the first script adds its check command to this table and makes it the gate. The Stage 1 regression cases become the acceptance test for each skill (`core/_system/CONVENTIONS.md` section 11).
+**Build gate: `npm test` must pass before every commit.** It covers the scripts and the structure of the hub, not the quality of a skill's output. For every change also re-read the diff, confirm every relative link you added points at a real file, confirm no template placeholder is left in `AGENTS.md` or `HANDOFF.md` (the check in clay-config `NEW-PROJECT.md`), and keep the README layout and task table matching what actually exists. There is no CI, so the gate runs only when an agent runs it. The Stage 1 regression cases become the acceptance test for each skill (`core/_system/CONVENTIONS.md` section 11).
 
 ### 2.7 Deploy process
 
@@ -205,8 +207,8 @@ If items 8, 9, or 10 fail, you can still do useful work. You cannot describe tha
 
 Notes for this repo:
 
-- Item 7: there are no dependencies to install yet.
-- Item 8: there is no build gate yet (2.6). Report that as "none exists", not as passed.
+- Item 7: there are no dependencies to install; Node 20 or later is enough.
+- Item 8: run `npm test` (2.6).
 - Item 10: there is no live site. Test instead whether you can reach the primary sources the build depends on: Meta's developer documentation, and Meta's Ad Library in a real browser.
 - Item 11: there is no database.
 - One extra item: is a Marketing-Hub checkout present? Needed only for the install piece, and only as a structural model (2.15).
@@ -221,10 +223,11 @@ ad-hub/
 ├── README.md            authority map: layout, task lookup, decision owners, hard rules
 ├── BUILD-PLAN.md        the build queue with a brief per skill; this repo's roadmap
 ├── PROVENANCE.md        where each outside source came from and its rights status
+├── package.json         names the test command only; no dependencies
 ├── people/clay.md       operator profile
 ├── .claude/             Claude Code settings and the session-start hook
 ├── core/
-│   ├── _system/         CONVENTIONS.md, memory-contract.md, spend-authority.md (drafts), schemas/
+│   ├── _system/         CONVENTIONS.md, memory-contract.md, spend-authority.md (drafts), schemas/, scripts/ (helper scripts and their tests)
 │   ├── skills/          one folder per skill; only ad-strategy/references/plays.md exists
 │   └── automations/     README.md only; routines not built
 ├── meta-system/         Meta layer: README.md plus dated references/ (platform-tools, result-signals)

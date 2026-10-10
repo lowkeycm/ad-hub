@@ -17,8 +17,8 @@ cd "$CLAUDE_PROJECT_DIR"
 git config user.name "lowkeycm"
 git config user.email "lowkeycm@users.noreply.github.com"
 
-# Dependencies, so the build gate works cold. Ad-Hub has no package manifest yet
-# (AGENTS.md 2.4); these branches do nothing until one lands. Edit for its toolchain then.
+# Dependencies, so the build gate works cold. Ad-Hub's scripts use only Node's standard
+# library and there is no lockfile (AGENTS.md 2.4), so these branches do nothing today.
 if [ -f pnpm-lock.yaml ]; then
   if command -v corepack >/dev/null 2>&1; then
     corepack pnpm install --frozen-lockfile

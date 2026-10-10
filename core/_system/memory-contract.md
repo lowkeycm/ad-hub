@@ -125,7 +125,8 @@ Tags live in the ledger, not in the ID. They are how results are rolled up.
 - Zero context works. A sentence and a goal is enough to draft; context improves the
   work, it never gates it. Going live has gates; see spend authority.
 - Say what shaped the output in a line or two, so stale context gets caught.
-- Flag files by age and name the skill that refreshes them.
+- Flag files by age and name the skill that refreshes them. The context loader
+  (`core/_system/scripts/context.mjs`) does this and loads only what a skill declares.
 - Keep Observed, Owner-confirmed and Proposed apart in every file a skill reads alone.
 
 ## Learnings
