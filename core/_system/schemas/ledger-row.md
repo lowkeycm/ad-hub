@@ -44,9 +44,8 @@ The example is illustrative, not a real ad.
 
 ## Who writes which column
 
-The memory contract gives IDs and tags to `ad-strategy` and status to `ad-launch` and
-`ad-manage`, but it does not say who moves an ad through the earlier statuses. Proposed,
-pending owner confirmation:
+IDs and tags belong to `ad-strategy`; live status changes belong to `ad-launch` and
+`ad-manage`. The earlier statuses are split as below (owner-confirmed 2026-10-10):
 
 | Status change | Writer |
 | --- | --- |

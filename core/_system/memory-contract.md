@@ -51,7 +51,7 @@ ads/
 | `strategy/*`, ledger IDs and tags | `ad-strategy` |
 | `creative/<batch>/` | `ad-creative` |
 | `platform/<platform>.md` | `ad-setup` |
-| ledger status, `changes/` | `ad-launch`, `ad-manage` (earlier ledger statuses: see [schemas/ledger-row.md](schemas/ledger-row.md), pending owner confirmation) |
+| ledger status, `changes/` | `ad-launch`, `ad-manage` (earlier ledger statuses: see [schemas/ledger-row.md](schemas/ledger-row.md)) |
 | `results/`, `learnings.md` | `ad-review` only |
 | `ads.yaml` | whichever skill last wrote a file updates that file's entry |
 

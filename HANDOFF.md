@@ -12,7 +12,7 @@ Every session ends by updating this file, committing, and pushing. Not committed
 - **Request:** Start Stage 1 of `BUILD-PLAN.md`, piece 1: record that the `ads/` layout and ad ID format are approved, and write the four schemas other skills depend on. Stop for review. Clay also decided that Marketing-Hub will ultimately own ad work in business repos that have both hubs, reconciled once Ad-Hub works on its own.
 - **Changed:** A skill writing into a business repo now has a fill-in template for each of the four files everything else depends on: the offer file, the spend authority file, a ledger row and a change-log entry. Each marks what blocks going live and what only blocks confident scaling, so thin context never blocks drafting. Files: `core/_system/schemas/` (offer.md, authority.md, ledger-row.md, change-entry.md); `core/_system/memory-contract.md` (approval recorded, schemas linked); `AGENTS.md` 2.15 (Clay's ownership decision) and 2.13 (repo map); `README.md` layout.
 - **Verification:** Every relative link resolves. No template placeholder in `AGENTS.md` or this file. Section 1 unchanged. The schemas were checked by reading them against the memory contract and spend authority; no skill exists yet to exercise them, so they are untested in use.
-- **Status:** PR open on `clay/stage1-schemas`, waiting for Clay's review before merge.
+- **Status:** PR [lowkeycm/ad-hub#2](https://github.com/lowkeycm/ad-hub/pull/2). Clay approved it and the ledger-status split on 2026-10-10; merged that day.
 - **Next:** Clay reviews the schemas and answers the ledger-status question below. Then piece 2: helper scripts.
 
 ## Prior Session (2026-10-05, agent scaffolding)
@@ -35,7 +35,6 @@ Ad-Hub is a hub of paid-ads skills that business repos plug into. As of 2026-10-
 **What is in progress.** Stage 1 piece 1, the schemas PR, awaiting review.
 
 **What is broken or unresolved.**
-- Who moves an ad through the early ledger statuses (planned, copy-ready, creative-ready, approved). The memory contract does not say; `core/_system/schemas/ledger-row.md` proposes a split for Clay to confirm.
 - No business repo named for testing the first skill.
 - `PROVENANCE.md` open items: the Ben Heath course terms were not reviewed, and two video creators are unnamed.
 - The language for the helper scripts is not chosen (recommendation: Node with no packages).
@@ -44,7 +43,6 @@ Ad-Hub is a hub of paid-ads skills that business repos plug into. As of 2026-10-
 **What could not be determined from here.** Whether any of Clay's platforms can view Meta's Ad Library in a working browser (this one cannot). Whether Meta's ads connector or the `meta-ads` command-line tool is set up anywhere for Clay.
 
 **Open owner actions.**
-- Review the schemas PR and confirm or change the ledger-status writers.
 - Delete the two leftover branches (the "Delete branch" button on each merged PR), or turn on automatic branch deletion in each repo's settings.
 - Name the business repo for the first skill test (needed after `start-here` is built).
 
