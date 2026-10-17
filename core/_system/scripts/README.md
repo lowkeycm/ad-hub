@@ -12,4 +12,5 @@ header comment is its full usage. Run from anywhere; `--hub` defaults to this hu
 
 Build gate, from the repo root: `npm test`. It runs the script tests against synthetic
 fixtures in `test/fixtures/`, then runs the freshness and skill checks on the real hub and
-checks that every regression case in `../regression/` is well formed.
+checks that every regression case in `../regression/` is well formed, and that the installer
+(`install/adhub-skills.mjs`) and its hook work on a scratch copy of a business folder.

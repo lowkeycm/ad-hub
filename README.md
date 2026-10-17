@@ -28,7 +28,7 @@ Ad-Hub/
 ├── BUILD-PLAN.md        build queue with a brief per skill
 ├── PROVENANCE.md        where outside material came from
 ├── people/              operator profile
-├── install/             plug-in mechanism for business repos (to build)
+├── install/             plug-in mechanism for business repos: adhub- pointer generator and hook
 ├── source-notes/        written reviews of outside sources, in our own words
 ├── core/                the chassis, platform-neutral
 │   ├── _system/         conventions, memory contract, spend authority, schemas, scripts, regression cases

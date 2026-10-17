@@ -6,6 +6,17 @@ Every session ends by updating this file, committing, and pushing. Not committed
 
 ## Last Session
 
+- **When:** 2026-10-17
+- **Who:** Clay. The platform showed the account listed in `people/clay.md`.
+- **Platform:** Claude Code (remote), branch `clay/stage1-installer`
+- **Request:** Build Stage 1 piece 4, the installer, as described and approved: one command run from a business repo adds an `adhub-` shortcut per Ad-Hub skill pointing back to the hub, a startup script refreshes them, and a paragraph for the business repo's AGENTS.md. Tested on synthetic businesses only. Stop for review.
+- **Changed:** A business repo can now plug into Ad-Hub in four steps (`install/README.md`). Its agents then see every built Ad-Hub skill as `adhub-<name>`. The shortcut tells the agent to read the real skill, load that business's ad files with the context loader, write only what the skill owns, and check spend authority before touching an account. It never copies the skill and never touches Marketing-Hub's `hub-` shortcuts. Files: `install/adhub-skills.mjs`, `install/session-start.sh`, `install/README.md`; two tests in `core/_system/scripts/test/scripts.test.mjs`; `AGENTS.md` 2.4, 2.6, 2.7, 2.12, 2.13; `README.md` layout; scripts README.
+- **Verification:** `npm test`: 18 of 18 pass. Installed into scratch copies of a regression business: three shortcuts from the test hub, `../ad-hub` paths when side by side, full paths otherwise, Marketing-Hub-style folder left alone, stale shortcut removed, `--remove` works, refuses to install into the hub itself. Disabled the cleanup step on purpose and confirmed the test fails. The startup script ran with and without a hub present. Against the real hub it writes zero shortcuts, because no skill is built yet. Not done: installing into a real business repo (none named) and a real session start in such a repo.
+- **Status:** PR open on `clay/stage1-installer`, waiting for Clay's review before merge.
+- **Next:** with this merged, Stage 1 is done. Stage 2 starts with the first skill, `start-here`. It can be built and run against the regression cases now; testing it in a real business repo needs Clay to name one.
+
+## Prior Session (2026-10-11 to 2026-10-14, Stage 1 piece 3 and doctrine rule 16)
+
 - **When:** 2026-10-11
 - **Who:** Clay. The platform showed the account listed in `people/clay.md`.
 - **Platform:** Claude Code (remote), branch `clay/stage1-regression-cases`
@@ -14,7 +25,7 @@ Every session ends by updating this file, committing, and pushing. Not committed
 - **Verification:** `npm test`: 16 of 16 pass. Broke an ad ID in case 02 on purpose and confirmed the new test fails, then restored it. Ran the context loader on every case folder. The cases themselves have not been run, because no skill exists yet: they are untested until the first skill is.
 - **Status:** PR [lowkeycm/ad-hub#4](https://github.com/lowkeycm/ad-hub/pull/4). Clay approved it on 2026-10-14, and the approval-recording rule with it (now in `core/_system/schemas/authority.md`); merged that day.
 - **Also 2026-10-14:** Clay's doctrine rule 16, the Project Management Formula, drafted by him on 2026-10-12 in [lowkeycm/ad-hub#5](https://github.com/lowkeycm/ad-hub/pull/5) and [lowkeycm/clay-config#7](https://github.com/lowkeycm/clay-config/pull/7), was recapped in plain language and merged in both on his OK. "Doctrine items 1 through 15" became "1 through 16" in `AGENTS.md` 2.3, `people/clay.md`, and the clay-config template and project map. Section 1 and the profile here match the clay-config template again. Clay's other active repos still have fifteen rules; clay-config `NEW-PROJECT.md` section 3 says to add rule 16 when each is next opened.
-- **Next:** piece 4, the last of Stage 1: the `adhub-` pointer generator and session hook for business repos.
+- **Next:** piece 4, the installer.
 
 ## Prior Session (2026-10-10, Stage 1 piece 2: helper scripts)
 
@@ -51,11 +62,11 @@ Every session ends by updating this file, committing, and pushing. Not committed
 
 ## Where We Are
 
-Ad-Hub is a hub of paid-ads skills that business repos plug into. As of 2026-10-11 it has its rules, file schemas, helper scripts with a build gate, and five regression cases. No skill is built yet.
+Ad-Hub is a hub of paid-ads skills that business repos plug into. As of 2026-10-17 the foundation (Stage 1) is complete once the installer PR merges. No skill is built yet.
 
-**What works.** The authority map (`README.md`), the system layer (`core/_system/`: conventions, memory contract, spend authority, four schemas, helper scripts, regression cases), `npm test` as the build gate, thirteen source reviews plus a conflicts list, the first plays library, and two dated Meta references. Freshness: `meta-system/references/platform-tools.md` due 2026-11-02; plays library due 2026-11-17; `meta-system/references/result-signals.md` due 2026-12-02.
+**What works.** The authority map (`README.md`), the system layer (`core/_system/`: conventions, memory contract, spend authority, four schemas, helper scripts, five regression cases), the installer (`install/`, pending merge), `npm test` as the build gate, thirteen source reviews plus a conflicts list, the first plays library, and two dated Meta references. Section 1 has sixteen rules, matching the clay-config template. Freshness: `meta-system/references/platform-tools.md` due 2026-11-02; plays library due 2026-11-17; `meta-system/references/result-signals.md` due 2026-12-02.
 
-**What is in progress.** Nothing open. Next is Stage 1 piece 4.
+**What is in progress.** Stage 1 piece 4, the installer PR, awaiting review.
 
 **What is broken or unresolved.**
 - The results snapshot format is not defined yet; `ad-review` owns it. The cases use a plain table and may need adjusting when `ad-review` is built.
@@ -63,15 +74,17 @@ Ad-Hub is a hub of paid-ads skills that business repos plug into. As of 2026-10-
 - No business repo named for testing the first skill.
 - `PROVENANCE.md` open items: the Ben Heath course terms were not reviewed, and two video creators are unnamed.
 - No CI, so `npm test` runs only when an agent runs it.
+- Clay's other active repos still have fifteen doctrine rules; clay-config `NEW-PROJECT.md` section 3 says to add rule 16 when each is next opened.
 - Merged branches cannot be deleted from this platform. Leftovers: `clay/agent-scaffolding`, `clay/stage1-schemas`, `clay/stage1-helper-scripts`, `clay/stage1-regression-cases` and `chore/add-pm-formula` here; `clay/add-ad-hub-project-map` and `chore/add-pm-formula` in clay-config.
 
 **What could not be determined from here.** Whether any of Clay's platforms can view Meta's Ad Library in a working browser (this one cannot). Whether Meta's ads connector or the `meta-ads` command-line tool is set up anywhere for Clay.
 
 **Open owner actions.**
+- Review the installer PR.
+- Name the business repo for the first skill test.
 - Delete the leftover branches, or turn on automatic branch deletion in each repo's settings.
-- Name the business repo for the first skill test (needed after `start-here` is built).
 
-**Next concrete step.** After review: Stage 1 piece 4, the `adhub-` pointer generator and session hook.
+**Next concrete step.** After review: Stage 2, skill 1, `start-here`, defined with Clay first (doctrine 16), then built and run against the regression cases.
 
 ## Platform capability notes
 
@@ -81,7 +94,7 @@ These are dated observations, not permanent truths. Retest any "cannot" older th
 
 | Capability | Result |
 | --- | --- |
-| Build gate | 2026-10-05: none existed. 2026-10-11: `npm test` runs, 16 of 16 pass. |
+| Build gate | 2026-10-05: none existed. 2026-10-17: `npm test` runs, 18 of 18 pass. |
 | Screenshot a local dev server | Partly. Headless Chromium (Playwright 1.56.1) rendered and screenshotted a local test page at 1440x900. There is no dev server in this repo to test. |
 | Reach the live site | No live site exists. Primary sources instead: Meta's developer documentation is reachable by plain web request (redirects to `developers.facebook.com/documentation/ads-commerce/marketing-api`). Meta's Ad Library is not: a plain request gets Meta's bot challenge (HTTP 403), and the headless browser failed on the session proxy's certificate (`ERR_CERT_AUTHORITY_INVALID`), so no public site opened in the browser at all. PyPI is reachable, so the `meta-ads` tool version can be checked. |
 | Query the database | No database. |
@@ -103,3 +116,5 @@ Keep doctrine 12's acknowledgment rule intact so work by other operators is visi
 - 2026-10-06: Stage 1 piece 1 (schemas) pushed to `clay/stage1-schemas`, PR #2; merged 2026-10-10 as `7a4d327`.
 - 2026-10-10: Stage 1 piece 2 (helper scripts) pushed to `clay/stage1-helper-scripts`, PR #3; merged 2026-10-11 as `6fd13f7`.
 - 2026-10-11: Stage 1 piece 3 (regression cases) pushed to `clay/stage1-regression-cases`, PR #4; merged 2026-10-14.
+- 2026-10-14: doctrine rule 16 merged here (PR #5) and in clay-config (PR #7).
+- 2026-10-17: Stage 1 piece 4 (installer) pushed to `clay/stage1-installer`, PR open for review.

@@ -166,3 +166,63 @@ test("regression cases: complete, named after real skills, and consistent with t
     assert.equal(r.code, 0, `${c}: context loader failed: ${r.err}`);
   }
 });
+
+test("installer: writes one pointer per built skill, keeps other hubs' pointers, clears stale ones", async () => {
+  const fs = await import("node:fs");
+  const os = await import("node:os");
+  const { frontmatter } = await import("../lib.mjs");
+  const hub = path.resolve(here, "../../../..");
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "adhub-install-"));
+  const biz = path.join(tmp, "biz");
+  fs.cpSync(path.join(hub, "core/_system/regression/02-local-service/business"), biz, { recursive: true });
+  const skills = path.join(biz, ".claude/skills");
+  fs.mkdirSync(path.join(skills, "hub-paid-ads"), { recursive: true });
+  fs.writeFileSync(path.join(skills, "hub-paid-ads/SKILL.md"), "keep");
+  fs.mkdirSync(path.join(skills, "adhub-retired-skill"), { recursive: true });
+  const install = (...a) => {
+    const r = spawnSync(process.execPath, [path.join(hub, "install/adhub-skills.mjs"), ...a], { encoding: "utf8" });
+    return { code: r.status, out: r.stdout, err: r.stderr };
+  };
+  try {
+    const r = install("--root", biz, "--hub", fx("hub"));
+    assert.equal(r.code, 0, r.err);
+    assert.match(r.out, /wrote 3 Ad-Hub skill pointer\(s\)/);
+    assert.deepEqual(fs.readdirSync(skills).sort(), ["adhub-ad-review", "adhub-ad-strategy", "adhub-audience-research", "hub-paid-ads"]);
+    assert.equal(fs.readFileSync(path.join(skills, "hub-paid-ads/SKILL.md"), "utf8"), "keep");
+    const text = fs.readFileSync(path.join(skills, "adhub-ad-strategy/SKILL.md"), "utf8");
+    assert.equal(frontmatter(text).name, "adhub-ad-strategy");
+    assert.match(frontmatter(text).description, /^Decide what to make and test next for one offer\. Use when: /);
+    const target = text.match(/Read `([^`]+)`/)[1];
+    assert.ok(fs.existsSync(path.isAbsolute(target) ? target : path.resolve(biz, target)), `pointer target missing: ${target}`);
+    assert.match(text, /context\.mjs --for ad-strategy --root \./);
+
+    const removed = install("--root", biz, "--remove");
+    assert.match(removed.out, /removed 3 Ad-Hub skill pointer\(s\)/);
+    assert.deepEqual(fs.readdirSync(skills), ["hub-paid-ads"]);
+
+    assert.equal(install("--root", hub).code, 2, "must refuse to install into the hub itself");
+    assert.match(install("--root", biz).out, /wrote \d+ Ad-Hub skill pointer\(s\)/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("installer hook: runs the generator when the hub is present, stays quiet when it is not", async () => {
+  const fs = await import("node:fs");
+  const os = await import("node:os");
+  const hub = path.resolve(here, "../../../..");
+  const hook = path.join(hub, "install/session-start.sh");
+  assert.equal(spawnSync("bash", ["-n", hook]).status, 0, "hook syntax");
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "adhub-hook-"));
+  const env = (extra) => ({ ...process.env, CLAUDE_CODE_REMOTE: "true", CLAUDE_PROJECT_DIR: tmp, ...extra });
+  try {
+    const found = spawnSync("bash", [hook], { encoding: "utf8", env: env({ AD_HUB: hub }) });
+    assert.equal(found.status, 0, found.stderr);
+    assert.match(found.stdout, /Ad-Hub skill pointer\(s\)/);
+    const missing = spawnSync("bash", [hook], { encoding: "utf8", env: env({ AD_HUB: path.join(tmp, "nowhere") }) });
+    assert.equal(missing.status, 0, missing.stderr);
+    assert.match(missing.stdout, /Ad-Hub not found at .*; adhub- skill pointers left as committed\./);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
